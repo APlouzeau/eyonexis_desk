@@ -1,26 +1,27 @@
 "use client";
 
 import * as React from "react";
-import { Minus, Plus } from "lucide-react";
 
 import { SearchForm } from "@/components/layout/search-form";
+import { VersionSwitcher } from "@/components/layout/version-switcher";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
     SidebarRail,
 } from "@/components/ui/sidebar";
+import { ChevronRightIcon } from "lucide-react";
 
 // This is sample data.
 const data = {
+    versions: ["0.0.1", "0.0.2", "0.0.3"],
     navMain: [
         {
             title: "Environnements",
@@ -106,43 +107,43 @@ const data = {
     ],
 };
 
-export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar {...props}>
             <SidebarHeader>
+                <VersionSwitcher versions={data.versions} defaultVersion={data.versions[0]} />
                 <SearchForm />
             </SidebarHeader>
-            <SidebarContent>
-                <SidebarGroup>
-                    <SidebarMenu>
-                        {data.navMain.map((item, index) => (
-                            <Collapsible key={item.title} defaultOpen={index === 1} className="group/collapsible">
-                                <SidebarMenuItem>
-                                    <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton>
-                                            {item.title}{" "}
-                                            <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                                            <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
-                                        </SidebarMenuButton>
-                                    </CollapsibleTrigger>
-                                    {item.items?.length ? (
-                                        <CollapsibleContent>
-                                            <SidebarMenuSub>
-                                                {item.items.map((item) => (
-                                                    <SidebarMenuSubItem key={item.title}>
-                                                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                                                            <a href={item.url}>{item.title}</a>
-                                                        </SidebarMenuSubButton>
-                                                    </SidebarMenuSubItem>
-                                                ))}
-                                            </SidebarMenuSub>
-                                        </CollapsibleContent>
-                                    ) : null}
-                                </SidebarMenuItem>
-                            </Collapsible>
-                        ))}
-                    </SidebarMenu>
-                </SidebarGroup>
+            <SidebarContent className="gap-0">
+                {/* We create a collapsible SidebarGroup for each parent. */}
+                {data.navMain.map((item) => (
+                    <Collapsible key={item.title} title={item.title} className="group/collapsible ">
+                        <SidebarGroup>
+                            <SidebarGroupLabel
+                                asChild
+                                className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                            >
+                                <CollapsibleTrigger>
+                                    {item.title}{" "}
+                                    <ChevronRightIcon className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                                </CollapsibleTrigger>
+                            </SidebarGroupLabel>
+                            <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up">
+                                <SidebarGroupContent>
+                                    <SidebarMenu>
+                                        {item.items.map((item) => (
+                                            <SidebarMenuItem key={item.title}>
+                                                <SidebarMenuButton asChild isActive={item.isActive}>
+                                                    <a href={item.url}>{item.title}</a>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>
+                                        ))}
+                                    </SidebarMenu>
+                                </SidebarGroupContent>
+                            </CollapsibleContent>
+                        </SidebarGroup>
+                    </Collapsible>
+                ))}
             </SidebarContent>
             <SidebarRail />
         </Sidebar>

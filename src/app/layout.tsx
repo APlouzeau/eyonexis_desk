@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Orbitron, Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
-import AppSidebar from "@/components/layout/app-sidebar";
 import { cn } from "@/lib/utils";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -51,10 +51,8 @@ export default function RootLayout({
                 <div className="flex grow bg-amber-50">
                     <SidebarProvider>
                         <AppSidebar />
-                        <main className="flex grow items-center justify-center w-full ">
-                            <SidebarTrigger />
-                            {children}
-                        </main>
+                        <SidebarTrigger />
+                        <main className="flex grow items-center justify-center w-full ">{children}</main>
                     </SidebarProvider>
                 </div>
             </body>
