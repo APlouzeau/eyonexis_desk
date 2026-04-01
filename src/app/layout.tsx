@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Orbitron, Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
-import Aside from "@/components/layout/Aside";
+import AppSidebar from "@/components/layout/app-sidebar";
+import { cn } from "@/lib/utils";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
     variable: "--font-inter",
@@ -11,6 +15,11 @@ const inter = Inter({
 
 const jetBrainsMono = JetBrains_Mono({
     variable: "--font-jetbrains-mono",
+    subsets: ["latin"],
+});
+
+const orbitron = Orbitron({
+    variable: "--font-orbitron",
     subsets: ["latin"],
 });
 
@@ -25,12 +34,28 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}>
+        <html
+            lang="en"
+            className={cn(
+                "h-full",
+                "antialiased",
+                inter.variable,
+                jetBrainsMono.variable,
+                orbitron.variable,
+                "font-sans",
+                geist.variable,
+            )}
+        >
             <body className="min-h-full flex flex-col" suppressHydrationWarning>
                 <Header />
-                <div className="flex">
-                    <Aside />
-                    <main className="min-h-screen m-auto w-full bg-amber-50">{children}</main>
+                <div className="flex grow bg-amber-50">
+                    <SidebarProvider>
+                        <AppSidebar />
+                        <main className="flex grow items-center justify-center w-full ">
+                            <SidebarTrigger />
+                            {children}
+                        </main>
+                    </SidebarProvider>
                 </div>
             </body>
         </html>

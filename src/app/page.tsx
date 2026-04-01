@@ -3,11 +3,11 @@ import StatCard from "@/components/ui/StatCard";
 
 import { Code, Folder, Layers, BookOpen, TrendingUp, Clock } from "@/app/_components/icons/DashboardIcons";
 import RecentlyAdded from "@/app/_components/RecentlyAdded";
-import Panel from "@/components/ui/Panel";
+import Panel from "@/app/_components/Panel";
 
 export default function Home() {
     return (
-        <div className="min-h-full flex flex-col items-center">
+        <div className=" flex flex-col items-center">
             <h2 className="text-xl font-bold text-foreground tracking-tight flex gap-2">
                 <TrendingUp className="w-5 h-5" />
                 Tableau de bord
@@ -24,8 +24,8 @@ export default function Home() {
                 </section>
                 <section>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-6xl mt-8 rounded-xl bg-white shadow-sm">
-                        <Panel title="Répartition par catégorie" icon={<Folder className="w-5 h-5" />} />
-                        <Panel title="Répartition par langage" icon={<Code className="w-5 h-5" />} />
+                        <Panel title="Répartition par langage" icon={<Folder className="w-5 h-5" />} />
+                        <Panel title="Répartition par catégorie" icon={<Code className="w-5 h-5" />} />
                     </div>
                 </section>
                 <section>

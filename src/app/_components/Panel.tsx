@@ -1,4 +1,5 @@
-import StaticProgressBar from "./StaticProgressBar";
+import LangageLabel from "@/components/ui/LangageLabel";
+import StaticProgressBar from "@/components/ui/StaticProgressBar";
 
 interface PanelProps {
     title: string;
@@ -16,6 +17,12 @@ export default function Panel({ title = "Titre du panneau", icon }: Readonly<Pan
 
             {/* Contenu du panneau */}
             <StaticProgressBar progress={50} color="#1672F3" />
+            <div className="pt-4">
+                <LangageLabel langage="JavaScript" color="bg-yellow-500" />
+                <LangageLabel langage="Python" color="bg-green-500" />
+                <LangageLabel langage="Rust" color="bg-red-500" />
+                <LangageLabel langage="PHP" color="bg-blue-500" />
+            </div>
         </div>
     );
 }
